@@ -28,7 +28,8 @@
                 <label asp-for="Book.Author"></label>
             </div>
             <div class="col-6">
-                <input asp-for="Book.Author" class="form-control" />
+                <input asp-for="Book.PublisherId" value="1" type="hidden" class="form-control" />
+                <select class="form-control select2" id="comboAuthor" style="width: 100%;"></select>
             </div>
             <span asp-validation-for="Book.Author" class="text-danger"></span>
         </div>
@@ -52,3 +53,8 @@
     </form>
 </div>
 
+<script type="text/javascript">
+    $(document).ready(function () {
+        
+    });
+</script>

@@ -1,0 +1,60 @@
+﻿@page
+@model BookListRazor.Pages.PublisherList.IndexModel
+@{
+}
+
+<div class="col-12 border p-3 mt-4">
+    <div class="form-group row">
+        <div class="col-md-9">
+            <h2 class="text-info">Publisher List</h2>
+        </div>
+        <div class="col-3">
+            <a class="btn btn-primary form-control text-white" asp-page="Upsert">Create Publisher</a>
+
+        </div>
+    </div>
+    <table id="tablePublisher" class="table table-striped border" style="width:100%">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th></th>
+            </tr>
+        </thead>
+    </table>
+</div>
+
+@section Scripts{
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            var table = $('#tablePublisher').DataTable({
+                "ajax": {
+                    "url": "/api/Publisher",
+                    "type": "GET",
+                    "datatype": "json"
+                },
+                "columns": [
+                    { "data": "name" },
+                    {
+                        "data": "id",
+                        "render": function (data) {
+                            return `<div class="text-center"><a href="PublisherList/Upsert?id=${data}" class="btn btn-success text-white" style="width:70px">Edit</a>&nbsp;<a onclick=Delete('/api/publisher/?id='+${data}) class="btn btn-danger text-white" style="width:70px">Delete</a></div>`
+                        }
+                    }
+
+                ],
+                "language": {
+                    "emptyTable": "No data found"
+                }
+            });
+        });
+
+        function Delete(url) {
+
+            ShowDeleteOperationForList("Are you sure?", "Once deletede, you will not be able to recover", "warning", url, 'tableBook');
+
+        }
+    </script>
+}

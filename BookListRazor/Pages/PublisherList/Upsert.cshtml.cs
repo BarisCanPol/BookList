@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
-namespace BookListRazor.Pages.BookList
+namespace BookListRazor.Pages.PublisherList
 {
     public class UpsertModel : PageModel
     {
@@ -17,19 +17,20 @@ namespace BookListRazor.Pages.BookList
         {
             _db = db;
         }
+
         [BindProperty]
-        public Book Book { get; set; }
+        public Publisher Publisher { get; set; }
         public async Task<IActionResult> OnGet(int? id)
         {
-            Book = new Book();
+            Publisher = new Publisher();
 
             //Create
             if (id == null)
                 return Page();
 
             //Update
-            Book = await _db.Book.FirstOrDefaultAsync(x => x.Id == id);
-            if (Book == null)
+            Publisher = await _db.Publisher.FirstOrDefaultAsync(x => x.Id == id);
+            if (Publisher == null)
                 return NotFound();
 
             return Page();
@@ -38,14 +39,11 @@ namespace BookListRazor.Pages.BookList
         {
             if (ModelState.IsValid)
             {
-                if (Book.Id == 0)
-                    _db.Book.Add(Book);
+                if (Publisher.Id == 0)
+                    _db.Publisher.Add(Publisher);
                 else
-                    _db.Book.Update(Book);
-
-
-                var record = await _db.Book.FindAsync(Book.Id);
-      
+                    _db.Publisher.Update(Publisher);
+                
                 await _db.SaveChangesAsync();
 
                 return RedirectToPage("Index");
