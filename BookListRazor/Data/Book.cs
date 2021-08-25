@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BookListRazor.Model
+namespace BookListRazor.Data
 {
     public class Book : BaseEntity
     {
@@ -13,7 +13,8 @@ namespace BookListRazor.Model
         public string Name { get; set; }
         public string Author { get; set; }
         public string ISBN { get; set; }
-
+        [Required]
+        [Range(1, int.MaxValue, ErrorMessage = "Must be select an Publisher")]
         public int PublisherId { get; set; }
         [ForeignKey("PublisherId")]
         public Publisher Publisher { get; set; }

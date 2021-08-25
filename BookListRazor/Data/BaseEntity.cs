@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BookListRazor.Model
+namespace BookListRazor.Data
 {
     public abstract class BaseEntity
     {

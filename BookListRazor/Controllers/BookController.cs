@@ -1,7 +1,5 @@
-﻿using BookListRazor.Model;
+﻿using BookListRazor.Data;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -27,8 +25,8 @@ namespace BookListRazor.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             var record = await _db.Book.FindAsync(id);
-            if(record is null)
-                return Json( new {success=false,message="Error while deleting"});
+            if (record is null)
+                return Json(new { success = false, message = "Error while deleting" });
 
             _db.Book.Remove(record);
 

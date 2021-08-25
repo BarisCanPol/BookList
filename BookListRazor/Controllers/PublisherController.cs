@@ -1,4 +1,5 @@
-﻿using BookListRazor.Model;
+﻿using BookListRazor.Data;
+using BookListRazor.Model.Common;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BookListRazor.Controllers
 {
-    [Route("api/Publisher")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class PublisherController : Controller
     {
@@ -25,9 +26,17 @@ namespace BookListRazor.Controllers
         //}
 
         [HttpGet]
-        public async Task<JsonResult> GetAllAsync()
+        public async Task<JsonResult> GetAll()
         {
             return Json(new { data = await _db.Publisher.ToListAsync()});
+        }
+
+        [HttpGet]
+        public JsonResult GetPublisherCombo()
+        {
+            var list = _db.Publisher.Select(x => new IdTextPair { id = x.Id, text = x.Name }).ToList();
+
+            return Json(list);
         }
     }
 }

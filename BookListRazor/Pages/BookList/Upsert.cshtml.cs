@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BookListRazor.Data;
 using BookListRazor.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -50,7 +51,8 @@ namespace BookListRazor.Pages.BookList
 
                 return RedirectToPage("Index");
             }
-            return RedirectToPage();
+            //return RedirectToPage();
+            return Page();
         }
     }
 }

@@ -1,11 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using BookListRazor.Model;
+using BookListRazor.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace BookListRazor.Pages.PublisherList
 {
@@ -43,7 +40,7 @@ namespace BookListRazor.Pages.PublisherList
                     _db.Publisher.Add(Publisher);
                 else
                     _db.Publisher.Update(Publisher);
-                
+
                 await _db.SaveChangesAsync();
 
                 return RedirectToPage("Index");
