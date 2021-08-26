@@ -1,5 +1,6 @@
 ﻿using BookListRazor.Data;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -18,7 +19,7 @@ namespace BookListRazor.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            return Json(new { data = _db.Book.ToList() });
+            return Json(new { data = _db.Book.AsNoTracking().ToList() });
         }
 
         [HttpDelete]
