@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace BookListRazor.Data
 {
-    public class Publisher : BaseEntity
+    public class Genre : BaseEntity
     {
         [Required]
-        public string Name { get; set; }
-        public ICollection<Book> Books { get; set; }
-        
+        public string GenreName { get; set; }
+        public int? ParentId { get; set; }
+
+        public ICollection<BookGenre> BookGenres { get; set; }
     }
 }

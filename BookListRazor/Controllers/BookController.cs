@@ -19,7 +19,20 @@ namespace BookListRazor.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            return Json(new { data = _db.Book.AsNoTracking().ToList() });
+            var list = _db.Book.AsNoTracking()
+                .Select(b => new Model.Book.BookGrid
+                {
+                    Id = b.Id,
+                    AuthorName = b.Author.AuthorName,
+                    ISBN = b.ISBN,
+                    Name = b.Name,
+                    PublisherId = b.PublisherId,
+                    PublisherName = b.Publisher.Name
+                })
+                .ToList();
+
+            return Json(new { data = list });
+
         }
 
         [HttpDelete]

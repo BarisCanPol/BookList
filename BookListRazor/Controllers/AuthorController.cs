@@ -11,30 +11,24 @@ namespace BookListRazor.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class PublisherController : Controller
+    public class AuthorController : Controller
     {
         private readonly ApplicationDbContext _db;
-        public PublisherController(ApplicationDbContext db)
+
+        public AuthorController(ApplicationDbContext db)
         {
             _db = db;
         }
-
-        //[HttpGet]
-        //public JsonResult GetAll()
-        //{
-        //    return Json(new { data =  _db.Publisher.ToList() });
-        //}
-
         [HttpGet]
         public async Task<JsonResult> GetAll()
         {
-            return Json(new { data = await _db.Publisher.ToListAsync()});
+            return Json(new { data = await _db.Author.ToListAsync() });
         }
 
         [HttpGet]
-        public JsonResult GetPublisherCombo()
+        public JsonResult GetAuthorCombo()
         {
-            var list = _db.Publisher.Select(x => new IdTextPair { id = x.Id, text = x.Name }).ToList();
+            var list = _db.Author.Select(x => new IdTextPair { id = x.Id, text = x.AuthorName }).ToList();
 
             return Json(list);
         }
@@ -42,11 +36,11 @@ namespace BookListRazor.Controllers
         [HttpDelete]
         public async Task<IActionResult> Delete(int id)
         {
-            var record = await _db.Publisher.FindAsync(id);
+            var record = await _db.Author.FindAsync(id);
             if (record is null)
                 return Json(new { success = false, message = "Error while deleting" });
 
-            _db.Publisher.Remove(record);
+            _db.Author.Remove(record);
 
             await _db.SaveChangesAsync();
 

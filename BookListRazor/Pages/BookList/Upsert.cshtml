@@ -27,10 +27,11 @@
             <div class="col-3">
                 <label asp-for="Book.Author"></label>
             </div>
-            <div class="col-6">
-                <input asp-for="Book.Author" class="form-control" />
+            <div class="col-6" id="divPublisher">
+                <input asp-for="Book.AuthorId" value="@Model.Book.AuthorId" id="AuthorId" type="hidden" class="form-control" />
+                <select class="form-control select2" id="comboAuthor" style="width: 100%;"></select>
             </div>
-            <span asp-validation-for="Book.Author" class="text-danger"></span>
+            <span asp-validation-for="Book.AuthorId" class="text-danger"></span>
         </div>
         <div class="form-group row">
             <div class="col-3">
@@ -38,7 +39,7 @@
             </div>
             <div class="col-6" id="divPublisher">
                 <input asp-for="Book.PublisherId" value="@Model.Book.PublisherId" id="PublisherId" type="hidden" class="form-control" />
-                <select class="form-control select2" id="comboAuthor" style="width: 100%;"></select>
+                <select class="form-control select2" id="comboPublisher" style="width: 100%;"></select>
             </div>
             <span asp-validation-for="Book.PublisherId" class="text-danger"></span>
         </div>
@@ -67,42 +68,72 @@
 
    @* <partial name="_ValidationScriptsPartial" />*@
 
-    <script type="text/javascript">
+<script type="text/javascript">
 
-        $(document).ready(function () {
+    $(document).ready(function () {
 
-            $.ajax({
-                url: "/api/Publisher/GetPublisherCombo",
-                dataType: 'json',
-                type: 'GET',
-                contentType: false,
-                processData: false,
-                success: function (data) {
-                    $('#comboAuthor').select2({
-                        dataType: 'json',
-                        data: data,
-                        placeholder: 'Plese select..',
-                        allowClear: true,
-                        //dropdownElement:$('#divPublisher'),
-                    });
+        $.ajax({
+            url: "/api/Publisher/GetPublisherCombo",
+            dataType: 'json',
+            type: 'GET',
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                $('#comboPublisher').select2({
+                    dataType: 'json',
+                    data: data,
+                    placeholder: 'Plese select..',
+                    allowClear: true,
+                    //dropdownElement:$('#divPublisher'),
+                });
 
-                    $('#comboAuthor').on('select2:select', function (evt) {
-                        $('#PublisherId').val(this.value);
-                    });
+                $('#comboPublisher').on('select2:select', function (evt) {
+                    $('#PublisherId').val(this.value);
+                });
 
-                    $('#comboAuthor').on('select2:clear', function (evt) {
-                        $('#PublisherId').val(0);
-                    });
+                $('#comboPublisher').on('select2:clear', function (evt) {
+                    $('#PublisherId').val(0);
+                });
 
-                    $('#comboAuthor').val($('#PublisherId').val()).trigger('change');
-
-
-                    $('.select2.select2-container.select2-container--default').addClass('form-control');
-                    $('.select2-selection.select2-selection--single').css('border', 'none');
-                }
-            });
+                $('#comboPublisher').val($('#PublisherId').val()).trigger('change');
 
 
+                $('.select2.select2-container.select2-container--default').addClass('form-control').css('padding', '0px');;
+                $('.select2-selection.select2-selection--single').css('border', 'none');
+            }
         });
-    </script>
+
+        $.ajax({
+            url: "/api/Author/GetAuthorCombo",
+            dataType: 'json',
+            type: 'GET',
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                $('#comboAuthor').select2({
+                    dataType: 'json',
+                    data: data,
+                    placeholder: 'Plese select..',
+                    allowClear: true,
+                    //dropdownElement:$('#divPublisher'),
+                });
+
+                $('#comboAuthor').on('select2:select', function (evt) {
+                    $('#AuthorId').val(this.value);
+                });
+
+                $('#comboAuthor').on('select2:clear', function (evt) {
+                    $('#AuthorId').val(0);
+                });
+
+                $('#comboAuthor').val($('#AuthorId').val()).trigger('change');
+
+
+                $('.select2.select2-container.select2-container--default').addClass('form-control').css('padding','0px');
+                $('.select2-selection.select2-selection--single').css('border', 'none');
+              
+            }
+        });
+    });
+</script>
 }

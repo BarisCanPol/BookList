@@ -1,0 +1,81 @@
+﻿@page
+@model BookListRazor.Pages.GenreList.SubCategoryModel
+@{
+}
+
+
+
+@section Scripts{
+
+    <link href="~/plugins/bootsrap-tagsinput/bootstrap-tagsinput.css" rel="stylesheet" />
+    <script src="~/plugins/bootsrap-tagsinput/bootstrap-tagsinput.js"></script>
+
+    <script type="text/javascript">
+
+
+        $(document).ready(function () {
+            //$('#tagsNames').tagsinput();
+        });
+
+        $(document).keypress(
+            function (event) {
+                if (event.which == '13') {
+                    event.preventDefault();
+                }
+            });
+    </script>
+
+}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>@(Model.Genre.Id != 0 ? "Edit":"Create")</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item"><a href="/PublisherList/Index">List</a></li>
+                    <li class="breadcrumb-item active">New Record</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<div class="container-fluid">
+    <div class="row">
+        <!-- left column -->
+        <div class="col-md-12">
+            <div class="card card-info">
+                <div class="card-header">
+                    <h3 class="card-title"></h3>
+                </div>
+                <!-- /.card-header -->
+                <!-- form start -->
+                <form class="form-horizontal" method="post">
+                    <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+                    <div class="card-body">
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label" asp-for="Genre.GenreName">Category Name</label>
+                            <div class="col-sm-7">
+                                <input type="text"   class="form-control" asp-for="Genre.GenreName" placeholder="Name">
+                            </div>
+                            <span asp-validation-for="Genre.GenreName" class="text-danger"></span>
+                        </div>
+
+                    </div>
+                    <!-- /.card-body -->
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-info">@(Model.Genre.Id != 0 ? "Update":"Create")</button>
+                        <a type="submit" asp-page="Index" class="btn btn-default float-right">Back To List</a>
+                    </div>
+                    <!-- /.card-footer -->
+                </form>
+            </div>
+            <!-- /.card -->
+        </div>
+    </div>
+</div>

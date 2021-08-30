@@ -4,36 +4,22 @@ using BookListRazor.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BookListRazor.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210829142527_AuthorAndGenreAdded")]
+    partial class AuthorAndGenreAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.9")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("BookListRazor.Data.Author", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("AuthorName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Author");
-                });
 
             modelBuilder.Entity("BookListRazor.Data.Book", b =>
                 {
@@ -42,7 +28,7 @@ namespace BookListRazor.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("AuthorId")
+                    b.Property<int?>("GenreId")
                         .HasColumnType("int");
 
                     b.Property<string>("ISBN")
@@ -63,7 +49,7 @@ namespace BookListRazor.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AuthorId");
+                    b.HasIndex("GenreId");
 
                     b.HasIndex("PublisherId");
 
@@ -72,13 +58,20 @@ namespace BookListRazor.Migrations
 
             modelBuilder.Entity("BookListRazor.Data.BookGenre", b =>
                 {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
                     b.Property<int>("BookId")
                         .HasColumnType("int");
 
                     b.Property<int>("GenreId")
                         .HasColumnType("int");
 
-                    b.HasKey("BookId", "GenreId");
+                    b.HasKey("Id");
+
+                    b.HasIndex("BookId");
 
                     b.HasIndex("GenreId");
 
@@ -96,7 +89,7 @@ namespace BookListRazor.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ParentId")
+                    b.Property<int>("ParentId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -122,19 +115,15 @@ namespace BookListRazor.Migrations
 
             modelBuilder.Entity("BookListRazor.Data.Book", b =>
                 {
-                    b.HasOne("BookListRazor.Data.Author", "Author")
+                    b.HasOne("BookListRazor.Data.Genre", null)
                         .WithMany("Books")
-                        .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("GenreId");
 
                     b.HasOne("BookListRazor.Data.Publisher", "Publisher")
                         .WithMany("Books")
                         .HasForeignKey("PublisherId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Author");
 
                     b.Navigation("Publisher");
                 });
@@ -148,7 +137,7 @@ namespace BookListRazor.Migrations
                         .IsRequired();
 
                     b.HasOne("BookListRazor.Data.Genre", "Genre")
-                        .WithMany("BookGenres")
+                        .WithMany()
                         .HasForeignKey("GenreId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -158,11 +147,6 @@ namespace BookListRazor.Migrations
                     b.Navigation("Genre");
                 });
 
-            modelBuilder.Entity("BookListRazor.Data.Author", b =>
-                {
-                    b.Navigation("Books");
-                });
-
             modelBuilder.Entity("BookListRazor.Data.Book", b =>
                 {
                     b.Navigation("BookGenres");
@@ -170,7 +154,7 @@ namespace BookListRazor.Migrations
 
             modelBuilder.Entity("BookListRazor.Data.Genre", b =>
                 {
-                    b.Navigation("BookGenres");
+                    b.Navigation("Books");
                 });
 
             modelBuilder.Entity("BookListRazor.Data.Publisher", b =>

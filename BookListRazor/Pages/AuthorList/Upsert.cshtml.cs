@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BookListRazor.Data;
-using BookListRazor.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
-namespace BookListRazor.Pages.BookList
+namespace BookListRazor.Pages.AuthorList
 {
     public class UpsertModel : PageModel
     {
@@ -18,19 +17,20 @@ namespace BookListRazor.Pages.BookList
         {
             _db = db;
         }
+
         [BindProperty]
-        public Book Book { get; set; }
+        public Author Author { get; set; }
         public async Task<IActionResult> OnGet(int? id)
         {
-            Book = new Book();
+            Author = new Author();
 
             //Create
             if (id == null)
                 return Page();
 
             //Update
-            Book = await _db.Book.FirstOrDefaultAsync(x => x.Id == id);
-            if (Book == null)
+            Author = await _db.Author.FirstOrDefaultAsync(x => x.Id == id);
+            if (Author == null)
                 return NotFound();
 
             return Page();
@@ -39,18 +39,15 @@ namespace BookListRazor.Pages.BookList
         {
             if (ModelState.IsValid)
             {
-                if (Book.Id == 0)
-                    _db.Book.Add(Book);
+                if (Author.Id == 0)
+                    _db.Author.Add(Author);
                 else
-                    _db.Book.Update(Book);
-
-                var record = await _db.Book.FindAsync(Book.Id);
+                    _db.Author.Update(Author);
 
                 await _db.SaveChangesAsync();
 
                 return RedirectToPage("Index");
             }
-            //return RedirectToPage();
             return Page();
         }
     }

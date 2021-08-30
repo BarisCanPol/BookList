@@ -45,7 +45,7 @@ namespace BookListRazor.Pages.PublisherList
 
                 return RedirectToPage("Index");
             }
-            return RedirectToPage();
+            return Page();
         }
     }
 }

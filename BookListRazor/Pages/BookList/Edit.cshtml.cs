@@ -26,7 +26,8 @@ namespace BookListRazor.Pages.BookList
                 var record = await _db.Book.FindAsync(Book.Id);
                 record.Name = Book.Name;
                 record.ISBN = Book.ISBN;
-                record.Author = Book.Author;
+                record.PublisherId = Book.PublisherId;
+                record.AuthorId = Book.AuthorId;
 
                 await _db.SaveChangesAsync();
 

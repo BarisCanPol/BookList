@@ -73,8 +73,9 @@
             <thead>
                 <tr>
                     <th>Name</th>
-                    <th>Author</th>
                     <th>ISBN</th>
+                    <th>Publisher Name</th>
+                    <th>Author Name</th>
                     <th></th>
                 </tr>
             </thead>
@@ -84,69 +85,70 @@
 
 @section Scripts{ 
 
-  <script type="text/javascript">
+    <script type="text/javascript">
 
 
-      $(document).ready(function () {
+        $(document).ready(function () {
 
-          var table = $('#tableBook').DataTable({
-              "ajax": {
-                  "url": "/api/Book",
-                  "type": "GET",
-                  "datatype":"json"
-              },
-              "columns": [
-                  { "data": "name" },
-                  { "data": "author" },
-                  { "data": "isbn" }, 
-                  {
-                      "data": "id",
-                      "render": function (data) {
-                          return `<div class="text-center"><a href="BookList/Upsert?id=${data}" class="btn btn-success text-white" style="width:70px">Edit</a>&nbsp;<a onclick=Delete('/api/book/?id='+${data}) class="btn btn-danger text-white" style="width:70px">Delete</a></div>`
-                      }
-                  }
+            var table = $('#tableBook').DataTable({
+                "ajax": {
+                    "url": "/api/Book",
+                    "type": "GET",
+                    "datatype": "json"
+                },
+                "columns": [
+                    { "data": "name" },
+                    { "data": "isbn" },
+                    { "data": "publisherName" },
+                    {'data':'authorName'},
+                    {
+                        "data": "id",
+                        "render": function (data) {
+                            return `<div class="text-center"><a href="BookList/Upsert?id=${data}" class="btn btn-success text-white" style="width:70px">Edit</a>&nbsp;<a onclick=Delete('/api/book/?id='+${data}) class="btn btn-danger text-white" style="width:70px">Delete</a></div>`
+                        }
+                    }
 
-              ],
-              "language": {
-                  "emptyTable":"No data found"
-              },
-              columnDefs: [
-                  { targets: [3], orderable: false },
-              ]
-          });
-      });
+                ],
+                "language": {
+                    "emptyTable": "No data found"
+                },
+                columnDefs: [
+                    { targets: [3], orderable: false },
+                ]
+            });
+        });
 
-      function Delete(url) {
+        function Delete(url) {
 
-          //in general.js
-          ShowDeleteOperationForList("Are you sure?", "Once deletede, you will not be able to recover", "warning", url,'tableBook')
+            //in general.js
+            ShowDeleteOperationForList("Are you sure?", "Once deletede, you will not be able to recover", "warning", url, 'tableBook')
 
-          //Swal.fire({
-          //    title: "Are you sure?",
-          //    text : "Once deletede, you will not be able to recover",
-          //    icon:"warning",
-          //    dangerMode: true,
-          //    showCancelButton: true
-          //    //cancelButton: true,
-          //}).then((willDelete) => {
-          //    if (willDelete.isConfirmed) {
-          //        $.ajax({
-          //            type: "DELETE",
-          //            url: url,
-          //            success: function (data) {
-          //                if (data.success) {
-          //                    toastr.success(data.message);
-          //                    //$('#tableBook').DataTable().ajax.reload();
-          //                    location.reload(true);
-          //                }
-          //                else {
-          //                    toastr.error(data.message);
-          //                }
-          //            }
+            //Swal.fire({
+            //    title: "Are you sure?",
+            //    text : "Once deletede, you will not be able to recover",
+            //    icon:"warning",
+            //    dangerMode: true,
+            //    showCancelButton: true
+            //    //cancelButton: true,
+            //}).then((willDelete) => {
+            //    if (willDelete.isConfirmed) {
+            //        $.ajax({
+            //            type: "DELETE",
+            //            url: url,
+            //            success: function (data) {
+            //                if (data.success) {
+            //                    toastr.success(data.message);
+            //                    //$('#tableBook').DataTable().ajax.reload();
+            //                    location.reload(true);
+            //                }
+            //                else {
+            //                    toastr.error(data.message);
+            //                }
+            //            }
 
-          //        });
-          //    }
-          //});
-      }
-  </script>
+            //        });
+            //    }
+            //});
+        }
+    </script>
 }

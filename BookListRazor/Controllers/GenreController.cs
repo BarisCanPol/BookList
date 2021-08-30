@@ -10,31 +10,23 @@ using System.Threading.Tasks;
 namespace BookListRazor.Controllers
 {
     [Route("api/[controller]/[action]")]
-    [ApiController]
-    public class PublisherController : Controller
+    public class GenreController : Controller
     {
         private readonly ApplicationDbContext _db;
-        public PublisherController(ApplicationDbContext db)
+        public GenreController(ApplicationDbContext db)
         {
             _db = db;
         }
-
-        //[HttpGet]
-        //public JsonResult GetAll()
-        //{
-        //    return Json(new { data =  _db.Publisher.ToList() });
-        //}
-
         [HttpGet]
         public async Task<JsonResult> GetAll()
         {
-            return Json(new { data = await _db.Publisher.ToListAsync()});
+            return Json(new { data = await _db.Genre.ToListAsync() });
         }
 
         [HttpGet]
-        public JsonResult GetPublisherCombo()
+        public JsonResult GetGenreCombo()
         {
-            var list = _db.Publisher.Select(x => new IdTextPair { id = x.Id, text = x.Name }).ToList();
+            var list = _db.Genre.Select(x => new IdTextPair { id = x.Id, text = x.GenreName }).ToList();
 
             return Json(list);
         }
@@ -42,11 +34,11 @@ namespace BookListRazor.Controllers
         [HttpDelete]
         public async Task<IActionResult> Delete(int id)
         {
-            var record = await _db.Publisher.FindAsync(id);
+            var record = await _db.Genre.FindAsync(id);
             if (record is null)
                 return Json(new { success = false, message = "Error while deleting" });
 
-            _db.Publisher.Remove(record);
+            _db.Genre.Remove(record);
 
             await _db.SaveChangesAsync();
 

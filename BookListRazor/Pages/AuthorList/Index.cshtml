@@ -1,19 +1,20 @@
 ﻿@page
-@model BookListRazor.Pages.PublisherList.IndexModel
+@model BookListRazor.Pages.AuthorList.IndexModel
 @{
 }
+
 
 <div class="col-12 border p-3 mt-4">
     <div class="form-group row">
         <div class="col-md-9">
-            <h2 class="text-info">Publisher List</h2>
+            <h2 class="text-info">Author List</h2>
         </div>
         <div class="col-3">
-            <a class="btn btn-primary form-control text-white" asp-page="Upsert">Create Publisher</a>
+            <a class="btn btn-primary form-control text-white" asp-page="Upsert">Create Author</a>
 
         </div>
     </div>
-    <table id="tablePublisher" class="table table-striped border" style="width:100%">
+    <table id="tableAuthor" class="table table-striped border" style="width:100%">
         <thead>
             <tr>
                 <th>Name</th>
@@ -29,18 +30,18 @@
 
         $(document).ready(function () {
 
-            var table = $('#tablePublisher').DataTable({
+            var table = $('#tableAuthor').DataTable({
                 "ajax": {
-                    "url": "/api/Publisher/GetAll",
+                    "url": "/api/Author/GetAll",
                     "type": "GET",
                     "datatype": "json"
                 },
                 "columns": [
-                    { "data": "name" },
+                    { "data": "authorName" },
                     {
                         "data": "id",
                         "render": function (data) {
-                            return `<div class="text-center"><a href="PublisherList/Upsert?id=${data}" class="btn btn-success text-white" style="width:70px">Edit</a>&nbsp;<a onclick=Delete('/api/publisher/delete?id='+${data}) class="btn btn-danger text-white" style="width:70px">Delete</a></div>`
+                            return `<div class="text-center"><a href="PublisherList/Upsert?id=${data}" class="btn btn-success text-white" style="width:70px">Edit</a>&nbsp;<a onclick=Delete('/api/author/delete?id='+${data}) class="btn btn-danger text-white" style="width:70px">Delete</a></div>`
                         }
                     }
 
@@ -56,7 +57,7 @@
 
         function Delete(url) {
 
-            ShowDeleteOperationForList("Are you sure?", "Once deletede, you will not be able to recover", "warning", url, 'tablePublisher');
+            ShowDeleteOperationForList("Are you sure?", "Once deletede, you will not be able to recover", "warning", url, 'tableAuthor');
 
         }
     </script>

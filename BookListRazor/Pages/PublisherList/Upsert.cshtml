@@ -1,34 +1,54 @@
 ﻿@page
 @model BookListRazor.Pages.PublisherList.UpsertModel
-
-
-<br />
-<h2 class="text-info">@(Model.Publisher.Id != 0 ? "Edit":"Create")</h2>
-<br />
-
-<div class="border container" style="padding:30px;">
-    <form method="post">
-        @if (Model.Publisher.Id != 0)
-        {
-            <input type="hidden" asp-for="Publisher.Id" />
-        }
-        <div class="text-danger" asp-validation-summary="ModelOnly"></div>
-        <div class="form-group row">
-            <div class="col-3">
-                <label asp-for="Publisher.Name"></label>
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>@(Model.Publisher.Id != 0 ? "Edit":"Create")</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item"><a href="/PublisherList/Index">List</a></li>
+                        <li class="breadcrumb-item active">New Record</li>
+                    </ol>
+                </div>
             </div>
-            <div class="col-6">
-                <input asp-for="Publisher.Name" class="form-control" />
+        </div><!-- /.container-fluid -->
+    </section>
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- left column -->
+            <div class="col-md-12">
+                <div class="card card-info">
+                    <div class="card-header">
+                        <h3 class="card-title"></h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <form class="form-horizontal" method="post">
+                        <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+                        <div class="card-body">
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label" asp-for="Publisher.Name"></label>
+                                <div class="col-sm-7">
+                                    <input type="text" class="form-control" asp-for="Publisher.Name" placeholder="Name">
+                                </div>
+                                <span asp-validation-for="Publisher.Name" class="text-danger"></span>
+                            </div>
+                                                     
+                        </div>
+                        <!-- /.card-body -->
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-info">@(Model.Publisher.Id != 0 ? "Update":"Create")</button>
+                            <a type="submit" asp-page="Index" class="btn btn-default float-right">Back To List</a>
+                        </div>
+                        <!-- /.card-footer -->
+                    </form>
+                </div>
+                <!-- /.card -->             
             </div>
-            <span asp-validation-for="Publisher.Name" class="text-danger"></span>
         </div>
-        <div class="form-group row">
-            <div class="col-3 offset-3">
-                <button class="btn btn-primary form-control" type="submit">@(Model.Publisher.Id != 0 ? "Update":"Create")</button>
-            </div>
-            <div class="col-3">
-                <a asp-page="Index" class="btn btn-success form-control">Back To List</a>
-            </div>
-        </div>
-    </form>
-</div>
+    </div>
