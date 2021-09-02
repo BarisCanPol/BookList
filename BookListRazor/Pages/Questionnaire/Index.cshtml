@@ -1,0 +1,91 @@
+﻿@page
+@model BookListRazor.Pages.Questionnaire.IndexModel
+
+@{
+    string[] items = { "c#", "java", "python", "c++", "c", "ruby", "php", "Groovy" };
+}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Which Author Do You Like to Read</h1>
+            </div>
+            
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+
+<div class="content">
+    @if (!string.IsNullOrWhiteSpace(Model.Result))
+    {
+        <form method="post" asp-page-handler="delete">
+            <div class="row mt-5">
+                <div class="col-12">
+                    <div class="callout callout-danger">
+                        <h5>Info!</h5>
+                        <p>
+                            Your favorite Author is: <h4>'@Model.Result'</h4>
+                            please click to reselect or wait 5 minutes to select again without click<button class="btn btn-info btn-sm" style="float:right">Change</button>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </form>
+    }
+    else
+    {
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card card-info">
+                        <form method="post">
+                            <div class="row">
+                                <div class="col-12">
+                                    <h6 class="display-4 border-bottom pb-2">Please Select</h6>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    @if (Model.AuthorList.Count() > 0)
+                                    {
+                                        @foreach (var item in Model.AuthorList)
+                                        {
+                                            <div class="col-3 mt-3">
+                                                <div class="form-group">
+                                                    <div class="form-check">
+                                                        <input name="survey" type="radio" class="form-check-input" id="@item.AuthorName" value="@item.AuthorName" />
+                                                        <label class="form-check-label" for="@item.AuthorName">@item.AuthorName</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <div class="callout callout-danger">
+                                            <h5>Alert!</h5>
+                                            <p>
+                                                No Data Found! Before this, enter some author data..
+                                            </p>
+                                        </div>
+                                    }
+                                </div>
+                               
+                                <div class="col-12">
+                                    <button class="btn btn-success btn-sm mt-5 mb-3 float-right">Kaydet</button>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+</div>
+

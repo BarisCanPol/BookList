@@ -1,5 +1,6 @@
 using BookListRazor.Data;
 using BookListRazor.Middlewares.Logging;
+using BookListRazor.Service;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -25,6 +26,8 @@ namespace BookListRazor
             services.AddControllersWithViews();
             services.AddRazorPages().AddRazorRuntimeCompilation();
 
+            services.AddTransient<AuthorService>();
+            services.AddTransient<PublisherService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

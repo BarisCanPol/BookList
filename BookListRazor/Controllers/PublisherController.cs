@@ -1,5 +1,6 @@
 ﻿using BookListRazor.Data;
 using BookListRazor.Model.Common;
+using BookListRazor.Service;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -14,9 +15,12 @@ namespace BookListRazor.Controllers
     public class PublisherController : Controller
     {
         private readonly ApplicationDbContext _db;
-        public PublisherController(ApplicationDbContext db)
+        private readonly PublisherService _publisherService;
+
+        public PublisherController(ApplicationDbContext db, PublisherService publisherService)
         {
             _db = db;
+            _publisherService = publisherService;
         }
 
         //[HttpGet]
@@ -45,6 +49,11 @@ namespace BookListRazor.Controllers
             var record = await _db.Publisher.FindAsync(id);
             if (record is null)
                 return Json(new { success = false, message = "Error while deleting" });
+
+            var result = _publisherService.ValidateDeletion(record);
+
+            if (!result.Result)
+                return Json(new { success = false, message = result.Message });
 
             _db.Publisher.Remove(record);
 
